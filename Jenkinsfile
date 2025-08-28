@@ -2,6 +2,7 @@ pipeline {
     agent any
     stages {
         stage('Build') { 
+            environment { DIRECTORY_PATH = 'Value' }
             steps {
                 echo "Fetch the source code from ${env.DIRECTORY_PATH}"
             }
