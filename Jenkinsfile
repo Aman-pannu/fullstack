@@ -1,5 +1,13 @@
 pipeline {
     agent any
+    properties
+        ([ parameters
+            ([ 
+                string(name: 'DIRECTORY_PATH', defaultValue: 'test', description: 'Directory path for the build'), 
+                choice(name: 'DEPLOY_ENVIRONMENT', choices: ['testing', 'staging', 'production'], description: 'Choose deployment environment'),
+                
+            ]) 
+        ])
     stages {
         stage('Build') { 
             environment { DIRECTORY_PATH = 'Value' }
@@ -19,19 +27,19 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                echo "Deploy the application to a testing environment ${env.TESTING_ENVIRONMENT}" 
+                echo "Deploy the application to a testing environment ${env.DEPLOY_ENVIRONMENT}" 
             }
         }
         stage('Approval') { 
             steps {
-                echo 'Deploy the application to a testing environment ${env.TESTING_ENVIRONMENT}' 
+                echo "Deploy the application to a testing environment ${env.DEPLOY_ENVIRONMENT}"
                 input message: 'Finished using the web site? (Click "Proceed" to continue)' 
-                echo 'Deployed to testing environment ${TESTING_ENVIRONMENT}'
+                echo "Deployed to testing environment ${env.DEPLOY_ENVIRONMENT}"
             }
         }
         stage('Deploy to Production') { 
             steps {
-                echo 'Deploy the application to a testing environment ${env.TESTING_ENVIRONMENT}'  
+                echo "Deploy the application to a testing environment ${env.DEPLOY_ENVIRONMENT}"  
             }
         }
     }
