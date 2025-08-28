@@ -1,6 +1,5 @@
 pipeline {
-    agent any
-    properties
+    agent any properties
         ([ parameters
             ([ 
                 string(name: 'DIRECTORY_PATH', defaultValue: 'test', description: 'Directory path for the build'), 
